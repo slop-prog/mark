@@ -1,6 +1,6 @@
 export function screenshotUrl(url: string): string {
   const key = process.env.NEXT_PUBLIC_APIFLASH_KEY
-  return `https://api.apiflash.com/v1/urltoimage?access_key=${key}&url=${encodeURIComponent(url)}&width=1280&height=800&format=jpeg&quality=80&full_page=true`
+  return `https://api.apiflash.com/v1/urltoimage?access_key=${key}&url=${encodeURIComponent(url)}&width=1280&height=800&format=jpeg&quality=80&full_page=false&no_cookie_banners=true&no_ads=true&delay=2`
 }
 
 export function extractDomain(url: string): string {
