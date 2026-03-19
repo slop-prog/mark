@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   if (!url) return NextResponse.json({ error: 'url required' }, { status: 400 })
 
   const key = process.env.APIFLASH_KEY
-  const apiUrl = `https://api.apiflash.com/v1/urltoimage?access_key=${key}&url=${encodeURIComponent(url)}&width=1280&height=800&format=jpeg&quality=80&full_page=true&no_cookie_banners=true&no_ads=true&delay=2`
+  const apiUrl = `https://api.apiflash.com/v1/urltoimage?access_key=${key}&url=${encodeURIComponent(url)}&width=1280&height=800&format=jpeg&quality=80&full_page=true&no_cookie_banners=true&no_ads=true&delay=4`
 
   const res = await fetch(apiUrl)
   const buffer = await res.arrayBuffer()
