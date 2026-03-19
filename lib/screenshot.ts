@@ -1,5 +1,5 @@
 export function screenshotUrl(url: string): string {
-  return `/api/screenshot?url=${encodeURIComponent(url)}`
+  return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`
 }
 
 export function extractDomain(url: string): string {
