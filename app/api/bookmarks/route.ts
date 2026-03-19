@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     // Generate screenshot URL once and store it — never called again on page load
     const key = process.env.APIFLASH_KEY
     const screenshot = key
-      ? `https://api.apiflash.com/v1/urltoimage?access_key=${key}&url=${encodeURIComponent(fullUrl)}&width=1280&height=800&format=jpeg&quality=80&full_page=false&no_cookie_banners=true&no_ads=true&delay=2`
+      ? `https://api.apiflash.com/v1/urltoimage?access_key=${key}&url=${encodeURIComponent(fullUrl)}&width=1280&height=800&format=jpeg&quality=80&full_page=true&no_cookie_banners=true&no_ads=true&delay=2`
       : null
 
     const bookmark = await prisma.bookmark.create({
