@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
 
     await browser.close()
 
-    return new NextResponse(screenshot, {
+    return new NextResponse(new Uint8Array(screenshot), {
       headers: {
         'Content-Type': 'image/jpeg',
         'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
