@@ -24,9 +24,24 @@ export default function LibraryPage() {
     const params = new URLSearchParams()
     if (activeTag !== 'all') params.set('tag', activeTag)
     if (search) params.set('q', search)
-    const res = await fetch(`/api/bookmarks?${params}`)
-    const data = await res.json()
-    setBookmarks(data)
+
+    // Retry up to 3 times to handle cold starts on Vercel free tier
+    for (let i = 0; i < 3; i++) {
+      try {
+        const res = await fetch(`/api/bookmarks?${params}`)
+        if (res.ok) {
+          const data = await res.json()
+          setBookmarks(data)
+          setLoading(false)
+          return
+        }
+      } catch {
+        // network error, try again
+      }
+      // Wait 1s before retrying
+      await new Promise(r => setTimeout(r, 1000))
+    }
+    // All retries failed — just stop loading
     setLoading(false)
   }, [activeTag, search])
 
