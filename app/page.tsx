@@ -21,29 +21,27 @@ export default function LibraryPage() {
   const [loading, setLoading] = useState(true)
 
   const fetchBookmarks = useCallback(async () => {
-    const params = new URLSearchParams()
-    if (activeTag !== 'all') params.set('tag', activeTag)
-    if (search) params.set('q', search)
+  const params = new URLSearchParams()
+  if (activeTag !== 'all') params.set('tag', activeTag)
+  if (search) params.set('q', search)
 
-    // Retry up to 3 times to handle cold starts on Vercel free tier
-    for (let i = 0; i < 3; i++) {
-      try {
-        const res = await fetch(`/api/bookmarks?${params}`)
-        if (res.ok) {
-          const data = await res.json()
-          setBookmarks(data)
-          setLoading(false)
-          return
-        }
-      } catch {
-        // network error, try again
+  for (let i = 0; i < 5; i++) {
+    try {
+      const res = await fetch(`/api/bookmarks?${params}`)
+      if (res.ok) {
+        const data = await res.json()
+        setBookmarks(data)
+        setLoading(false)
+        return
       }
-      // Wait 1s before retrying
-      await new Promise(r => setTimeout(r, 1000))
+    } catch {
+      // network error, try again
     }
-    // All retries failed — just stop loading
-    setLoading(false)
-  }, [activeTag, search])
+    // Wait longer each retry (1s, 2s, 3s, 4s, 5s)
+    await new Promise(r => setTimeout(r, (i + 1) * 1000))
+  }
+  setLoading(false)
+}, [activeTag, search])
 
   useEffect(() => { fetchBookmarks() }, [fetchBookmarks])
 
