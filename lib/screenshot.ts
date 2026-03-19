@@ -1,5 +1,5 @@
 export function screenshotUrl(url: string): string {
-  return `https://image.thum.io/get/width/1280/crop/5000/noanimate/${encodeURIComponent(url)}`
+  return `/api/screenshot?url=${encodeURIComponent(url)}`
 }
 
 export function extractDomain(url: string): string {
